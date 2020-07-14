@@ -8,28 +8,101 @@ namespace AdventureGame
     {
         private string monsterName;
         private string monsterDescription;
-        private int monsterHealth;
-        private int monsterAttackDamage;
         private bool monsterDead;
-
-        public Monsters(string _monsterName, string _monsterDescription, int _monsterHealth, int _monsterAttackDamage)
+        private int monsterHealth;
+        private int monsterPower;
+        private List<Location> locations;
+        //init location information empty
+        public Monsters()
         {
-            monsterName = _monsterName;
-            monsterDescription = _monsterDescription;
-            monsterHealth = _monsterHealth;
-            monsterAttackDamage = _monsterAttackDamage;
+            monsterName = "";
+            monsterDescription = "";
+            monsterDead = false;
+            monsterHealth = 25;
+            monsterPower = 4;
+            locations = new List<Location>();
         }
 
-        public string MonsterName { get; set; }
-
-        public string MonsterDescription { get; set; }
-
-        public int MonsterHealth { get; set; }
-
-        public int MonsterAttackDamage
+        //init location information with title
+        public Monsters(string mName)
         {
-            get;
-            set;
+            monsterName = mName;
+            monsterDescription = "";
+            locations = new List<Location>();
         }
+
+        //init location information with title and desc
+        public Monsters(string mName, string mDescrption)
+        {
+            monsterName = mName;
+            monsterDescription = mDescrption;
+            locations = new List<Location>();
+        }
+
+        public Monsters(string mName, string mDescrption,bool mDead, int mHealth, int mPower)
+        {
+            monsterName = mName;
+            monsterDescription = mDescrption;
+            monsterDead = mDead;
+            monsterHealth = mHealth;
+            monsterPower = mPower;
+
+        }
+
+        public override string ToString()
+        {
+            return monsterName;
+        }
+        public string getMonsterName()
+        {
+            return monsterName;
+        }
+
+        public void setMonster(string mName)
+        {
+             monsterName = mName;
+        }
+
+        public string getMonsterDescription()
+        {
+            return monsterDescription;
+        }
+
+        public void setMonsterDescription(string mDescription)
+        {
+             monsterDescription = mDescription;
+        }
+
+        public bool getMonsterDead()
+        {
+            return monsterDead;
+        }
+
+        public void setMonsterDead(bool mDead)
+        {
+            monsterDead = mDead;
+        }
+
+        public int getMonsterHealth()
+        {
+            return monsterHealth;
+        }
+
+        public void setMonsterHealth(int mHealth)
+        {
+            monsterHealth = mHealth;
+        }
+
+        public int getMonsterPower()
+        {
+            return monsterPower;
+        }
+
+        public void setMonsterPower(int mPower)
+        {
+            monsterPower = mPower;
+        }
+
+
     }
-}
+    }

@@ -167,8 +167,7 @@ namespace AdventureGame
             l25.addExit(new Exit(Exit.Directions.North,l26));
             l25.addExit(new Exit(Exit.Directions.East,l24));
 
-            l1.addMonster(new Monsters("test","test",2,1));
-
+            l1.addMonster(new Monsters("Hello","test",false,25,10));
 
 
 
@@ -217,9 +216,10 @@ namespace AdventureGame
 
             Console.WriteLine("\nCurrent monsters in room: \n");
 
-            foreach (Monsters monster in currentLocation.GetMonsters())
+            foreach (Monsters monster in currentLocation.getMonsters())
             {
-                Console.WriteLine(monster.MonsterDescription);
+                 Console.WriteLine("Monster's in the room \nName: {0} \nDescription: {1} \n" +
+                                   "Is alive: {2} \nHealth: {3} \nPower: {4}",monster.getMonsterName(),monster.getMonsterDescription(),monster.getMonsterDead(),monster.getMonsterHealth(),monster.getMonsterPower());
             }
 
             Console.WriteLine();
