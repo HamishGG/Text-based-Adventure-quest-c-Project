@@ -12,21 +12,25 @@ namespace AdventureGame
 
         public bool isRunning = true;
         private bool _gameOver;
-        public readonly string Url = "http://hamishgalpin.com/AdventureImages/Map.jpg";
+        public readonly string Url = "https://hamishgalpin.com/AdventureImages/Map.jpg";
 
 
         private List<Item> inventory;
+        Player player = new Player();
+
+
 
         public Game()
         {
             inventory = new List<Item>();
 
             var textInfo = new CultureInfo("en-UK", false).TextInfo;
-            var result = textInfo.ToTitleCase(GetInput("Please enter the name you would to be called"));
+            var result = textInfo.ToTitleCase(player.getName("Please enter the name you would to be called"));
             Console.Clear();
             Console.WriteLine("\nHello and welcome to Europa Moon base. {0} as you can see there is clearly a problem here.\nWe would like you to check the place out ",result);
             Console.WriteLine("\nPress 'h' or type 'help' for help");
             Console.WriteLine("\nIf you would like to see a photo of the map please type in 'map' or 'm'. THIS WILL OPEN IN DEFAULT BROWSER");
+            Console.WriteLine("\nYour current health is {0}", player.getHealth());
 
             //Building the map
 
@@ -228,7 +232,8 @@ namespace AdventureGame
                 Console.WriteLine("'use X':             Attempts to use an item, where X is the items name.");
                 Console.WriteLine("'i' / 'inventory':   Allows you to see the items in your inventory.");
                 Console.WriteLine("'q' / 'quit':        Quits the game.");
-                Console.WriteLine("'m' / 'map':     Opens a copy of the map in your browser");
+                Console.WriteLine("'m' / 'map':         Opens a copy of the map in your browser");
+                Console.WriteLine("'d' / 'die':         This will kill you and end the game.(for testing purposes)");
                 Console.WriteLine();
                 Console.WriteLine(
                     "Directions can be input as either the full word, or the abbriviation, \ne.g. 'North or N'");
@@ -284,6 +289,13 @@ namespace AdventureGame
                 }
                 return;
             }
+            if (command == "d" || command == "die")
+            {
+                player.SetisDead(true);
+                pHealthGone();
+                return;
+            }
+
 
             if (command.Length >= 7 && command.Substring(0, 7) == "look at")
             {
@@ -299,21 +311,21 @@ namespace AdventureGame
                     if (command.Substring(8).ToLower() == "Space Gun")
                     {
                         Console.WriteLine("\n" + currentLocation.getInventory().Find(x => x.Name.Contains("Space Gun"))
-                            .Descrption + "\n");
+                            .Description + "\n");
                         return;
                     }
 
                     if (command.Substring(8).ToLower() == "Space Gun Ammo")
                     {
                         Console.WriteLine("\n" + currentLocation.getInventory()
-                            .Find(x => x.Name.Contains("Space Gun Ammo")).Descrption + "\n");
+                            .Find(x => x.Name.Contains("Space Gun Ammo")).Description + "\n");
                         return;
                     }
 
                     if (command.Substring(8).ToLower() == "Rations")
                     {
                         Console.WriteLine("\n" + currentLocation.getInventory().Find(x => x.Name.Contains("Rations"))
-                            .Descrption + "\n");
+                            .Description + "\n");
                         return;
                     }
                 }
@@ -411,6 +423,17 @@ namespace AdventureGame
                 return false;
             }
 
+            private void pHealthGone()
+            {
+                if (player.getHealth() == 0 || player.getdeath())
+                {
+                    Console.WriteLine("I'm Afraid you have died and this is game over :(");
+                    player.SetisDead(true);
+                    isRunning = false;
+                    return;
+                }
+            }
+
 
             private void showInventory()
             {
@@ -450,18 +473,6 @@ namespace AdventureGame
                 {
                     Console.WriteLine("\nNope. Time to quit.\n");
                 }
-            }
-            private static string GetInput(string Prompt)
-            {
-                string Result = "";
-                do {
-                    Console.Write(Prompt + ": ");
-                    Result = Console.ReadLine();
-                    if (string.IsNullOrEmpty(Result)) {
-                        Console.WriteLine("Empty input, please try again");
-                    }
-                } while (string.IsNullOrEmpty(Result));
-                return Result;
             }
 
             private void OpenUrl(string url)
