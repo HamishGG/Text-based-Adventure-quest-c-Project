@@ -8,6 +8,7 @@ namespace AdventureGame
         private string roomDescription;
         private List<Exit> exits;
         private List<Item> inventory;
+        private List<Monsters> monster;
 
         //init location information empty
         public Location()
@@ -16,6 +17,7 @@ namespace AdventureGame
             roomDescription = "";
             exits = new List<Exit>();
             inventory = new List<Item>();
+            monster = new List<Monsters>();
         }
 
         //init location information with title
@@ -25,6 +27,7 @@ namespace AdventureGame
             roomDescription = "";
             exits = new List<Exit>();
             inventory = new List<Item>();
+            monster = new List<Monsters>();
         }
 
         //init location information with title and desc
@@ -34,12 +37,14 @@ namespace AdventureGame
             roomDescription = description;
             exits = new List<Exit>();
             inventory = new List<Item>();
+            monster = new List<Monsters>();
         }
 
         public override string ToString()
         {
             return roomTitle;
         }
+
 
         //adds exit
         public void addExit(Exit exit)
@@ -80,6 +85,24 @@ namespace AdventureGame
             if (inventory.Contains((itemToRemove)))
             {
                 inventory.Remove(itemToRemove);
+            }
+        }
+
+        public List<Monsters> GetMonsters()
+        {
+            return new List<Monsters>();
+        }
+
+        public void addMonster(Monsters monsterToAdd)
+        {
+            monster.Add(monsterToAdd);
+        }
+
+        public void removeMonster(Monsters monsterToRemove)
+        {
+            if (monster.Contains(monsterToRemove))
+            {
+                monster.Remove(monsterToRemove);
             }
         }
 

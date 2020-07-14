@@ -16,14 +16,14 @@ namespace AdventureGame
 
 
         private List<Item> inventory;
-        Player player = new Player();
+        readonly Player player = new Player();
+        private List<Monsters> monsters;
 
 
 
         public Game()
         {
             inventory = new List<Item>();
-
             var textInfo = new CultureInfo("en-UK", false).TextInfo;
             var result = textInfo.ToTitleCase(player.getName("Please enter the name you would to be called"));
             Console.Clear();
@@ -167,6 +167,8 @@ namespace AdventureGame
             l25.addExit(new Exit(Exit.Directions.North,l26));
             l25.addExit(new Exit(Exit.Directions.East,l24));
 
+            l1.addMonster(new Monsters("test","test",2,1));
+
 
 
 
@@ -211,6 +213,13 @@ namespace AdventureGame
             foreach (Exit exit in currentLocation.getExits())
             {
                 Console.WriteLine(exit.GetDirections());
+            }
+
+            Console.WriteLine("\nCurrent monsters in room: \n");
+
+            foreach (Monsters monster in currentLocation.GetMonsters())
+            {
+                Console.WriteLine(monster.MonsterDescription);
             }
 
             Console.WriteLine();
@@ -504,4 +513,4 @@ namespace AdventureGame
                 }
             }
         }
-    }
+}
