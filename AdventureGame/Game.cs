@@ -1,5 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
+using System.Globalization;
+using System.Runtime.InteropServices;
 
 namespace AdventureGame
 {
@@ -9,6 +12,8 @@ namespace AdventureGame
 
         public bool isRunning = true;
         private bool _gameOver;
+        public readonly string Url = "http://hamishgalpin.com/AdventureImages/Map.jpg";
+
 
         private List<Item> inventory;
 
@@ -16,60 +21,66 @@ namespace AdventureGame
         {
             inventory = new List<Item>();
 
-            Console.WriteLine("Welcome  ");
-            Console.WriteLine("Press 'h' or type 'help' for help");
+            var textInfo = new CultureInfo("en-UK", false).TextInfo;
+            var result = textInfo.ToTitleCase(GetInput("Please enter the name you would to be called"));
+            Console.Clear();
+            Console.WriteLine("\nHello and welcome to Europa Moon base. {0} as you can see there is clearly a problem here.\nWe would like you to check the place out ",result);
+            Console.WriteLine("\nPress 'h' or type 'help' for help");
+            Console.WriteLine("\nIf you would like to see a photo of the map please type in 'map' or 'm'. THIS WILL OPEN IN DEFAULT BROWSER");
 
             //Building the map
 
-            Location l1 = new Location("Entrance",
+            Location l1 = new Location("l1entrance",
                 "entrance");
-            Location l2 = new Location("hallway",
+            Location l2 = new Location("l2hallway",
                 "\n");
-            Location l3 = new Location("room1",
+            Location l3 = new Location("l3room",
                 "\n");
-            Location l4 = new Location("room2",
+            Location l4 = new Location("l4room",
                 "\n");
-            Location l5 = new Location("room3",
+            Location l5 = new Location("l5room",
                 "\n");
-            Location l6 = new Location("hallway2",
+            Location l6 = new Location("l6hallway",
                 "\n");
-            Location l7 = new Location("room4",
+            Location l7 = new Location("l7room",
                 "\n");
-            Location l8 = new Location("hallway3",
+            Location l8 = new Location("l8hallway",
                 "\n");
-            Location l9 = new Location("\n",
+            Location l9 = new Location("l9hallway",
                 "\n");
-            Location l10 = new Location("\n",
+            Location l10 = new Location("l10room",
                 "\n");
-            Location l11 = new Location("\n",
+            Location l11 = new Location("l11hallway",
                 "\n");
-            Location l12 = new Location("\n",
+            Location l12 = new Location("l12hallway",
                 "\n");
-            Location l13 = new Location("\n",
+            Location l13 = new Location("l13hallway",
                 "\n");
-            Location l14 = new Location("\n",
+            Location l14 = new Location("l14room",
                 "\n");
-            Location l15 = new Location("\n",
+            Location l15 = new Location("l15room",
                 "\n");
-            Location l16 = new Location("\n",
+            Location l16 = new Location("l16hallway",
                 "\n");
-            Location l17 = new Location("\n",
+            Location l17 = new Location("l17hallway",
                 "\n");
-            Location l18 = new Location("\n",
+            Location l18 = new Location("l18room",
                 "\n");
-            Location l19 = new Location("\n",
+            Location l19 = new Location("l19hallway",
                 "\n");
-            Location l20 = new Location("\n",
+            Location l20 = new Location("l20hallway",
                 "\n");
-            Location l21 = new Location("\n",
+            Location l21 = new Location("l21room",
                 "\n");
-            Location l22 = new Location("\n",
+            Location l22 = new Location("l22room",
                 "\n");
-            Location l23 = new Location("\n",
+            Location l23 = new Location("l23hallway",
                 "\n");
-            Location l24 = new Location("\n",
+            Location l24 = new Location("l24room",
                 "\n");
-            Location l25 = new Location("\n",
+            Location l25 = new Location("l15hallway",
+                "\n");
+            Location l26 = new Location("l26bossroom",
                 "\n");
 
 
@@ -88,7 +99,7 @@ namespace AdventureGame
             l5.addExit(new Exit(Exit.Directions.South, l4));
             l5.addExit(new Exit(Exit.Directions.West, l6));
 
-            l6.addExit(new Exit(Exit.Directions.North, l8));
+            l6.addExit(new Exit(Exit.Directions.North, l15));
             l6.addExit(new Exit(Exit.Directions.East, l5));
             l6.addExit(new Exit(Exit.Directions.South, l3));
 
@@ -96,58 +107,61 @@ namespace AdventureGame
             l7.addExit(new Exit(Exit.Directions.East,l3));
             l7.addExit(new Exit(Exit.Directions.West,l9));
 
-            l8.addExit(new Exit(Exit.Directions.East, l7));
-            l8.addExit(new Exit(Exit.Directions.West, l9));
+            l8.addExit(new Exit(Exit.Directions.South, l7));
+            l8.addExit(new Exit(Exit.Directions.West, l12));
 
-            l9.addExit(new Exit(Exit.Directions.North, l10));
-            l9.addExit(new Exit(Exit.Directions.East, l8));
+            l9.addExit(new Exit(Exit.Directions.East, l7));
+            l9.addExit(new Exit(Exit.Directions.West, l10));
 
             l10.addExit(new Exit(Exit.Directions.North, l11));
-            l10.addExit(new Exit(Exit.Directions.East, l12));
-            l10.addExit(new Exit(Exit.Directions.South, l9));
+            l10.addExit(new Exit(Exit.Directions.East, l9));
 
-            l11.addExit(new Exit(Exit.Directions.East, l13));
+            l11.addExit(new Exit(Exit.Directions.North, l13));
+            l11.addExit(new Exit(Exit.Directions.East, l12));
             l11.addExit(new Exit(Exit.Directions.South, l10));
-            l11.addExit(new Exit(Exit.Directions.West, l14));
 
             l12.addExit(new Exit(Exit.Directions.East, l8));
-            l12.addExit(new Exit(Exit.Directions.West, l10));
+            l12.addExit(new Exit(Exit.Directions.West, l11));
 
-            l13.addExit(new Exit(Exit.Directions.North, l15));
-            l13.addExit(new Exit(Exit.Directions.East, l16));
-            l13.addExit(new Exit(Exit.Directions.South, l6));
-            l13.addExit(new Exit(Exit.Directions.West, l11));
+            l13.addExit(new Exit(Exit.Directions.East, l15));
+            l13.addExit(new Exit(Exit.Directions.South, l11));
+            l13.addExit(new Exit(Exit.Directions.West, l14));
 
-            l14.addExit(new Exit(Exit.Directions.East, l11));
+            l14.addExit(new Exit(Exit.Directions.East, l13));
 
             l15.addExit(new Exit(Exit.Directions.North, l17));
-            l15.addExit(new Exit(Exit.Directions.South, l13));
+            l15.addExit(new Exit(Exit.Directions.East, l16));
+            l15.addExit(new Exit(Exit.Directions.South, l6));
+            l15.addExit(new Exit(Exit.Directions.West, l13));
 
-            l16.addExit(new Exit(Exit.Directions.West, l13));
+            l16.addExit(new Exit(Exit.Directions.West, l15));
 
             l17.addExit(new Exit(Exit.Directions.North, l18));
-            l17.addExit(new Exit(Exit.Directions.East, l19));
             l17.addExit(new Exit(Exit.Directions.South, l15));
-            l17.addExit(new Exit(Exit.Directions.West, l20));
 
-            l18.addExit(new Exit(Exit.Directions.North, l21));
+            l18.addExit(new Exit(Exit.Directions.North, l23));
+            l18.addExit(new Exit(Exit.Directions.East, l19));
             l18.addExit(new Exit(Exit.Directions.South, l17));
+            l18.addExit(new Exit(Exit.Directions.West,l20));
 
-            l19.addExit(new Exit(Exit.Directions.West,l17));
+            l19.addExit(new Exit(Exit.Directions.West,l18));
 
-            l20.addExit(new Exit(Exit.Directions.East, l17));
-            l20.addExit(new Exit(Exit.Directions.West, l22));
+            l20.addExit(new Exit(Exit.Directions.East, l18));
+            l20.addExit(new Exit(Exit.Directions.West, l21));
 
-            l21.addExit(new Exit(Exit.Directions.East, l24));
-            l21.addExit(new Exit(Exit.Directions.South, l18));
+            l21.addExit(new Exit(Exit.Directions.North, l22));
+            l21.addExit(new Exit(Exit.Directions.East, l20));
 
-            l22.addExit(new Exit(Exit.Directions.North, l23));
-            l22.addExit(new Exit(Exit.Directions.East, l20));
+            l22.addExit(new Exit(Exit.Directions.South, l21));
 
-            l23.addExit(new Exit(Exit.Directions.South, l22));
+            l23.addExit(new Exit(Exit.Directions.North, l24));
+            l23.addExit(new Exit(Exit.Directions.South, l18));
 
-            l24.addExit(new Exit(Exit.Directions.North, l25));
-            l24.addExit(new Exit(Exit.Directions.West, l21));
+            l24.addExit(new Exit(Exit.Directions.East, l25));
+            l24.addExit(new Exit(Exit.Directions.South, l23));
+
+            l25.addExit(new Exit(Exit.Directions.North,l26));
+            l25.addExit(new Exit(Exit.Directions.East,l24));
 
 
 
@@ -214,6 +228,7 @@ namespace AdventureGame
                 Console.WriteLine("'use X':             Attempts to use an item, where X is the items name.");
                 Console.WriteLine("'i' / 'inventory':   Allows you to see the items in your inventory.");
                 Console.WriteLine("'q' / 'quit':        Quits the game.");
+                Console.WriteLine("'m' / 'map':     Opens a copy of the map in your browser");
                 Console.WriteLine();
                 Console.WriteLine(
                     "Directions can be input as either the full word, or the abbriviation, \ne.g. 'North or N'");
@@ -224,6 +239,12 @@ namespace AdventureGame
             {
                 showInventory();
                 Console.WriteLine();
+                return;
+            }
+
+            if (command == "map" || command == "m")
+            {
+                OpenUrl(Url);
                 return;
             }
 
@@ -428,6 +449,47 @@ namespace AdventureGame
                 else
                 {
                     Console.WriteLine("\nNope. Time to quit.\n");
+                }
+            }
+            private static string GetInput(string Prompt)
+            {
+                string Result = "";
+                do {
+                    Console.Write(Prompt + ": ");
+                    Result = Console.ReadLine();
+                    if (string.IsNullOrEmpty(Result)) {
+                        Console.WriteLine("Empty input, please try again");
+                    }
+                } while (string.IsNullOrEmpty(Result));
+                return Result;
+            }
+
+            private void OpenUrl(string url)
+            {
+                try
+                {
+                    Process.Start(url);
+                }
+                catch
+                {
+                    // hack because of this: https://github.com/dotnet/corefx/issues/10361
+                    if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
+                    {
+                        url = url.Replace("&", "^&");
+                        Process.Start(new ProcessStartInfo("cmd", $"/c start {url}") { CreateNoWindow = true });
+                    }
+                    else if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux))
+                    {
+                        Process.Start("xdg-open", url);
+                    }
+                    else if (RuntimeInformation.IsOSPlatform(OSPlatform.OSX))
+                    {
+                        Process.Start("open", url);
+                    }
+                    else
+                    {
+                        throw;
+                    }
                 }
             }
         }
