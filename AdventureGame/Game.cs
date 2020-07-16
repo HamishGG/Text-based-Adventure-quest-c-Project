@@ -30,7 +30,7 @@ namespace AdventureGame
             Console.WriteLine("\nHello and welcome to Europa Moon base. {0} as you can see there is clearly a problem here.\nWe would like you to check the place out ",result);
             Console.WriteLine("\nPress 'h' or type 'help' for help");
             Console.WriteLine("\nIf you would like to see a photo of the map please type in 'map' or 'm'. THIS WILL OPEN IN DEFAULT BROWSER");
-            Console.WriteLine("\nYour current health is {0}", player.getHealth());
+            Console.WriteLine("\nYour current health is: {0}", player.getHealth());
 
             //Building the map
 
@@ -170,40 +170,21 @@ namespace AdventureGame
             l3.addMonster(new Monsters("Ghaak","I horrible looking beast that is covered in blood.",false,25,10));
             l5.addMonster(new Monsters("Chesuns","Their skin is elastic and strong. It's covered in a thick layer of mucous.",false,25,10));
             l7.addMonster(new Monsters("Ghaulqud","These aliens are a type of amphibian. They have six arms and two legs, with a short, powerful tail.",false,25,10));
-            l9.addMonster(new Monsters("Breerrix","Their skin colors are mostly dark red, dark gold, dark bronze, white and dark pink, ",false,25,10));
+            l10.addMonster(new Monsters("Breerrix","Their skin colors are mostly dark red, dark gold, dark bronze, white and dark pink, ",false,25,10));
             l14.addMonster(new Monsters("Kholzen","These aliens are a type of amphibian. They have four arms and four legs, with a short, thin tail.",false,25,10));
             l11.addMonster(new Monsters("Viegas","Their skin is elastic and strong. It's covered in small, coarse scales",false,25,10));
+            l13.addMonster(new Monsters("Viegas","Their skin is elastic and strong. It's covered in small, coarse scales",false,25,10));
+            l17.addMonster(new Monsters("Viegas","Their skin is elastic and strong. It's covered in small, coarse scales",false,25,10));
             l18.addMonster(new Monsters("Vrekon","Their scale colors are mostly brown, red and light red, which tend to become dim as they age.",false,25,10));
             l16.addMonster(new Monsters("Eciel","Their ears are small and stubby and their hearing is excellent.",false,25,10));
-            l4.addMonster(new Monsters("Vamads","Their skin is thin and fairly weak. It's covered in thick fur.",false,25,10));
+            l16.addMonster(new Monsters("Vamads","Their skin is thin and fairly weak. It's covered in thick fur.",false,35,6));
             l19.addMonster(new Monsters("Crol","Their long mouths and wide noses often make these aliens appear to be reserved, but looks can be deceiving.",false,25,10));
             l22.addMonster(new Monsters("Xuuk","Their ears are huge and their hearing is not the best. They also have two horns on their heads.",false,25,10));
             l10.addMonster(new Monsters("Vrigoids","Their skin is very thick and rough. It's covered short, curly hairs.",false,25,10));
             l24.addMonster(new Monsters("Ferruk","These aliens are a type of mammal. They have four arms and two legs, with a long, thin tail.",false,25,10));
             l25.addMonster(new Monsters("Nihilanth","Physically, the Nihilanth resembles a gigantic, \nabnormally proportioned brownish-gray (pink in some lighting instances) fetus with a massive head atop a smaller body",false,25,10));
 
-
-
-
-
             //Item food = new Item("rations", true, "A space ration. Not very tasty but is there any other option?");
-            //l2.addItem(food);
-
-            //l2.addExit(new Exit(Exit.Directions.East, l3));
-            //l2.addExit(new Exit(Exit.Directions.West, l4));
-
-            //l3.addExit(new Exit(Exit.Directions.South, l2));
-            //l4.addExit(new Exit(Exit.Directions.South, l2));
-
-            //Item spaceGun = new Item("space gun", true, "A gun that has been designed to be used in space combat");
-            //Item ammo = new Item("space gun ammo", true,
-            //    "Ammo for your Space Gun. 5.56mm rounds that where made by Elon Musks space team 'SpaceX'");
-            //l1.addItem(spaceGun);
-            //l1.addItem(ammo);
-
-            Item spacegun = new Item("spacegun", true, "gun that can be used in space", 5,true);
-            l1.addItem(spacegun);
-
 
             currentLocation = l1;
             showLocation();
@@ -211,32 +192,30 @@ namespace AdventureGame
 
         public void showLocation()
         {
-            Console.WriteLine("\n" + currentLocation.getTitle() + "\n");
-            Console.WriteLine(currentLocation.getDescrption());
+            Console.WriteLine("\nlocation: " + currentLocation.getTitle() + "\n");
+            Console.WriteLine("What you see: " + currentLocation.getDescrption());
 
-            if (currentLocation.getInventory().Count > 0)
-            {
-                Console.WriteLine("\nThe room contains the following:\n");
+            //if (currentLocation.getInventory().Count > 0)
+            //{
+            //    Console.WriteLine("\nThe room contains the following:\n");
 
-                for (int i = 0; i < currentLocation.getInventory().Count; i++)
-                {
-                    Console.WriteLine(currentLocation.getInventory()[i].Name);
-                }
-            }
+            //    for (int i = 0; i < currentLocation.getInventory().Count; i++)
+            //    {
+            //        Console.WriteLine(currentLocation.getInventory()[i].Name);
+            //    }
+            //}
 
-            Console.WriteLine("\nAvailable Exits: \n");
+            Console.WriteLine("\nAvailable Exits:");
 
             foreach (Exit exit in currentLocation.getExits())
             {
-                Console.WriteLine(exit.GetDirections());
+                Console.WriteLine(exit.GetDirections() + "\n");
             }
-
-            Console.WriteLine("\nCurrent monsters in room: \n");
 
             foreach (Monsters monster in currentLocation.getMonsters())
             {
-                 Console.WriteLine("Monster's in the room \nName: {0} \nDescription: {1} \n" +
-                                   "Is Dead: {2} \nHealth: {3} \nPower: {4}",monster.getMonsterName(),monster.getMonsterDescription(),monster.getMonsterDead(),monster.getMonsterHealth(),monster.getMonsterPower());
+                 Console.WriteLine("\nA monster has been found in the room: \nName: {0} \nDescription: {1}" +
+                                   " \nHealth: {2} \nPower: {3}",monster.getMonsterName(),monster.getMonsterDescription(),monster.getMonsterHealth(),monster.getMonsterPower());
             }
 
             Console.WriteLine("please write next command: ");
@@ -251,12 +230,12 @@ namespace AdventureGame
             if (command == "help" || command == "h")
             {
                 Console.WriteLine("Welcome to this Text Adventure!");
-                Console.WriteLine("'l' / 'look':        Shows you the room, its exits, and any items it contains.");
-                Console.WriteLine(
-                    "'Look at X':         Gives you information about a specific item in your \n                     inventory, where X is the items name.");
-                Console.WriteLine("'pick up X':         Attempts to pick up an item, where X is the items name.");
-                Console.WriteLine("'use X':             Attempts to use an item, where X is the items name.");
-                Console.WriteLine("'i' / 'inventory':   Allows you to see the items in your inventory.");
+                //Console.WriteLine("'l' / 'look':        Shows you the room, its exits, and any items it contains.");
+                //Console.WriteLine(
+                    //"'Look at X':         Gives you information about a specific item in your \n                     inventory, where X is the items name.");
+                //Console.WriteLine("'pick up X':         Attempts to pick up an item, where X is the items name.");
+                //Console.WriteLine("'use X':             Attempts to use an item, where X is the items name.");
+                //Console.WriteLine("'i' / 'inventory':   Allows you to see the items in your inventory.");
                 Console.WriteLine("'q' / 'quit':        Quits the game.");
                 Console.WriteLine("'m' / 'map':         Opens a copy of the map in your browser");
                 Console.WriteLine("'d' / 'die':         This will kill you and end the game.(for testing purposes)");
@@ -279,48 +258,48 @@ namespace AdventureGame
                 return;
             }
 
-            if (command.Length >= 7 && command.Substring(0, 7) == "pick up")
-            {
-                if (command == "pick up" || command == "p")
-                {
-                    Console.WriteLine("\nPlease specify what you would like to pick up\n");
-                    return;
-                }
+            //if (command.Length >= 7 && command.Substring(0, 7) == "pick up")
+            //{
+            //    if (command == "pick up" || command == "p")
+            //    {
+            //        Console.WriteLine("\nPlease specify what you would like to pick up\n");
+            //        return;
+            //    }
 
-                if (currentLocation.getInventory().Exists(x => x.Name == command.Substring(8)) &&
-                    currentLocation.getInventory().Exists(x => x.Useable))
-                {
-                    inventory.Add(currentLocation.takeItem(command.Substring(8)));
-                    Console.WriteLine("\nYou pick up the " + command.Substring(8) + ".\n");
-                    return;
-                }
+            //    if (currentLocation.getInventory().Exists(x => x.Name == command.Substring(8)) &&
+            //        currentLocation.getInventory().Exists(x => x.Useable))
+            //    {
+            //        inventory.Add(currentLocation.takeItem(command.Substring(8)));
+            //        Console.WriteLine("\nYou pick up the " + command.Substring(8) + ".\n");
+            //        return;
+            //    }
 
-                if (currentLocation.getInventory().Exists(x => x.Name == command.Substring(8)) &&
-                    currentLocation.getInventory().Exists(x => x.Useable == false))
-                {
-                    Console.WriteLine("\nYou cannot pick up the " + command.Substring(8) + ".\n");
-                    return;
-                }
+            //    if (currentLocation.getInventory().Exists(x => x.Name == command.Substring(8)) &&
+            //        currentLocation.getInventory().Exists(x => x.Useable == false))
+            //    {
+            //        Console.WriteLine("\nYou cannot pick up the " + command.Substring(8) + ".\n");
+            //        return;
+            //    }
 
-                Console.WriteLine("\n" + command.Substring(8) + " does not exist.\n");
-                return;
-            }
+            //    Console.WriteLine("\n" + command.Substring(8) + " does not exist.\n");
+            //    return;
+            //}
 
-            if (command == "look" || command == "l")
-            {
-                showLocation();
-                if (currentLocation.getInventory().Count == 0)
-                {
-                    Console.WriteLine("there are no items of interest in this room.\n");
-                }
-                return;
-            }
-            if (command == "d" || command == "die")
-            {
-                player.SetisDead(true);
-                pHealthGone();
-                return;
-            }
+            //if (command == "look" || command == "l")
+            //{
+            //    showLocation();
+            //    if (currentLocation.getInventory().Count == 0)
+            //    {
+            //        Console.WriteLine("there are no items of interest in this room.\n");
+            //    }
+            //    return;
+            //}
+            //if (command == "d" || command == "die")
+            //{
+            //    player.SetisDead(true);
+            //    pHealthGone();
+            //    return;
+            //}
 
             if (command == "a" || command == "attack")
             {
@@ -328,8 +307,13 @@ namespace AdventureGame
                 {
                     foreach (Monsters monster in currentLocation.getMonsters())
                     {
-                        var monsterHealth = monster.getMonsterHealth(); 
-                        int updatedMHealth;
+                        var monsterHealth = monster.getMonsterHealth();
+                        int updatedMHealth = monsterHealth;
+                        var playerHealth = player.getHealth();
+                        int updatePHealth = playerHealth;
+                        Random rnd = new Random();
+                        int damageChance = rnd.Next(1, 15);
+
                         if (monster.getMonsterHealth() == 0)
                         {
                             monster.setMonsterDead(true);
@@ -337,12 +321,50 @@ namespace AdventureGame
                             return;
                         }
 
+                        if (damageChance == 3 || damageChance == 5)
+                        {
+                            Console.WriteLine("Oh No you missed and did not deal damage");
+                            updatePHealth = playerHealth - monster.getMonsterPower();
+                            player.setHealth(updatePHealth);
+                            Console.WriteLine("Due top you missing the monster deals 6 damage.");
+                            Console.WriteLine("Your health is now {0}.", player.getHealth());
+                            pHealthGone();
+                            return;
+                        }
+
+                        if (damageChance == 9)
+                        {
+                            updatedMHealth = monsterHealth - 10;
+                            monster.setMonsterHealth(updatedMHealth);
+                            Console.WriteLine("CRITICAL!! You shoot the monster dealing 10 Damage.");
+                            if (updatedMHealth <= -0)
+                            {
+                                Console.WriteLine("You have killed the monster from the critical shot.");
+                                Console.WriteLine("the monster has been killed. You may move to the next room");
+                                currentLocation.removeMonster(monster);
+                                pShowHealth();
+                                showLocation();
+                                
+                            }
+                            else
+                            {
+                                Console.WriteLine("The monsters health is now {0}.", monster.getMonsterHealth());   
+                            }
+                            Console.WriteLine("Your health is now {0}.", player.getHealth());
+                            return;
+                        }
+
                         updatedMHealth = monsterHealth - 5;
-                                monster.setMonsterHealth(updatedMHealth);
-                                Console.WriteLine("You shoot the monster dealing 5 Damage.");
-                                if (monster.getMonsterHealth() > 0)
+                        monster.setMonsterHealth(updatedMHealth);
+                        Console.WriteLine("You shoot the monster dealing 5 Damage.");
+                        updatePHealth = playerHealth - monster.getMonsterPower();
+                        player.setHealth(updatePHealth);
+                        Console.WriteLine("When attacking the monster they dealt 3 damage.");
+                                Console.WriteLine("Your health is now {0}.", player.getHealth());
+                                if (monster.getMonsterHealth()  > 0)
                                 {
-                                    Console.WriteLine("The monsters health is now {0}.",monster.getMonsterHealth());   
+                                    Console.WriteLine("The monsters health is now {0}.", monster.getMonsterHealth());
+
                                 }
                                 else
                                 {
@@ -352,12 +374,7 @@ namespace AdventureGame
                                     showLocation();
                                     return;
                                 }
-                                var playerHealth = player.getHealth();
-                                int updatePHealth;
-                                updatePHealth = playerHealth - 3;
-                                player.setHealth(updatePHealth);
-                                Console.WriteLine("When attacking the monster they dealt 3 damage.");
-                                Console.WriteLine("Your health is now {0}.", player.getHealth());
+                                pHealthGone();
                                 return;
                     }
                 }
@@ -501,7 +518,6 @@ namespace AdventureGame
                     Console.WriteLine("I'm Afraid you have died and this is game over :(");
                     player.SetisDead(true);
                     isRunning = false;
-                    return;
                 }
             }
 

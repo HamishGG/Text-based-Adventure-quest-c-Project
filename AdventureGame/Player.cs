@@ -14,7 +14,7 @@ namespace AdventureGame
         public Player()
         {
             playerName = "";
-            playerHealth = 100;
+            playerHealth = 60;
             inventory = new List<Item>();
             isDead = false;
         }
