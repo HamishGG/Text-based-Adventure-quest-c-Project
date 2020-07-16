@@ -167,7 +167,20 @@ namespace AdventureGame
             l25.addExit(new Exit(Exit.Directions.North,l26));
             l25.addExit(new Exit(Exit.Directions.East,l24));
 
-            l1.addMonster(new Monsters("Hello","test",false,25,10));
+            l3.addMonster(new Monsters("Ghaak","I horrible looking beast that is covered in blood.",false,25,10));
+            l5.addMonster(new Monsters("Chesuns","Their skin is elastic and strong. It's covered in a thick layer of mucous.",false,25,10));
+            l7.addMonster(new Monsters("Ghaulqud","These aliens are a type of amphibian. They have six arms and two legs, with a short, powerful tail.",false,25,10));
+            l9.addMonster(new Monsters("Breerrix","Their skin colors are mostly dark red, dark gold, dark bronze, white and dark pink, ",false,25,10));
+            l14.addMonster(new Monsters("Kholzen","These aliens are a type of amphibian. They have four arms and four legs, with a short, thin tail.",false,25,10));
+            l11.addMonster(new Monsters("Viegas","Their skin is elastic and strong. It's covered in small, coarse scales",false,25,10));
+            l18.addMonster(new Monsters("Vrekon","Their scale colors are mostly brown, red and light red, which tend to become dim as they age.",false,25,10));
+            l16.addMonster(new Monsters("Eciel","Their ears are small and stubby and their hearing is excellent.",false,25,10));
+            l4.addMonster(new Monsters("Vamads","Their skin is thin and fairly weak. It's covered in thick fur.",false,25,10));
+            l19.addMonster(new Monsters("Crol","Their long mouths and wide noses often make these aliens appear to be reserved, but looks can be deceiving.",false,25,10));
+            l22.addMonster(new Monsters("Xuuk","Their ears are huge and their hearing is not the best. They also have two horns on their heads.",false,25,10));
+            l10.addMonster(new Monsters("Vrigoids","Their skin is very thick and rough. It's covered short, curly hairs.",false,25,10));
+            l24.addMonster(new Monsters("Ferruk","These aliens are a type of mammal. They have four arms and two legs, with a long, thin tail.",false,25,10));
+            l25.addMonster(new Monsters("Nihilanth","Physically, the Nihilanth resembles a gigantic, \nabnormally proportioned brownish-gray (pink in some lighting instances) fetus with a massive head atop a smaller body",false,25,10));
 
 
 
@@ -187,6 +200,10 @@ namespace AdventureGame
             //    "Ammo for your Space Gun. 5.56mm rounds that where made by Elon Musks space team 'SpaceX'");
             //l1.addItem(spaceGun);
             //l1.addItem(ammo);
+
+            Item spacegun = new Item("spacegun", true, "gun that can be used in space", 5,true);
+            l1.addItem(spacegun);
+
 
             currentLocation = l1;
             showLocation();
@@ -219,10 +236,10 @@ namespace AdventureGame
             foreach (Monsters monster in currentLocation.getMonsters())
             {
                  Console.WriteLine("Monster's in the room \nName: {0} \nDescription: {1} \n" +
-                                   "Is alive: {2} \nHealth: {3} \nPower: {4}",monster.getMonsterName(),monster.getMonsterDescription(),monster.getMonsterDead(),monster.getMonsterHealth(),monster.getMonsterPower());
+                                   "Is Dead: {2} \nHealth: {3} \nPower: {4}",monster.getMonsterName(),monster.getMonsterDescription(),monster.getMonsterDead(),monster.getMonsterHealth(),monster.getMonsterPower());
             }
 
-            Console.WriteLine();
+            Console.WriteLine("please write next command: ");
         }
 
         //todo: Implement the input handling algorithm.
@@ -264,7 +281,7 @@ namespace AdventureGame
 
             if (command.Length >= 7 && command.Substring(0, 7) == "pick up")
             {
-                if (command == "pick up")
+                if (command == "pick up" || command == "p")
                 {
                     Console.WriteLine("\nPlease specify what you would like to pick up\n");
                     return;
@@ -305,115 +322,154 @@ namespace AdventureGame
                 return;
             }
 
-
-            if (command.Length >= 7 && command.Substring(0, 7) == "look at")
+            if (command == "a" || command == "attack")
             {
-                if (command == "look at")
+                if (currentLocation.getMonsters().Count == 1)
                 {
-                    Console.WriteLine("\n Please specify what you wish to look at.\n");
-                    return;
-                }
-
-                if (currentLocation.getInventory().Exists(x =>
-                    x.Name == command.Substring(8) || inventory.Exists(x => x.Name == command.ToLower().Substring(8))))
-                {
-                    if (command.Substring(8).ToLower() == "Space Gun")
+                    foreach (Monsters monster in currentLocation.getMonsters())
                     {
-                        Console.WriteLine("\n" + currentLocation.getInventory().Find(x => x.Name.Contains("Space Gun"))
-                            .Description + "\n");
-                        return;
-                    }
-
-                    if (command.Substring(8).ToLower() == "Space Gun Ammo")
-                    {
-                        Console.WriteLine("\n" + currentLocation.getInventory()
-                            .Find(x => x.Name.Contains("Space Gun Ammo")).Description + "\n");
-                        return;
-                    }
-
-                    if (command.Substring(8).ToLower() == "Rations")
-                    {
-                        Console.WriteLine("\n" + currentLocation.getInventory().Find(x => x.Name.Contains("Rations"))
-                            .Description + "\n");
-                        return;
-                    }
-                }
-                else
-                {
-                    Console.WriteLine("\nThat item does not exist in this room or your inventory.\n");
-                    return;
-                }
-            }
-
-            if (command.Length >= 3 && command.Substring(0, 3) == "use")
-            {
-                if (command == "use")
-                {
-                    Console.WriteLine("\n Please specify what you wish to use.\n");
-                    return;
-                }
-
-                if (inventory.Exists(x => x.Name == command.ToLower().Substring(4)))
-                {
-                    Console.WriteLine("\nUse " + command.Substring(4) + " with?\n");
-                    string secondItem = Console.ReadLine();
-                    if (currentLocation.getInventory().Exists(x => x.Name == secondItem))
-                    {
-                        if (secondItem == "me" && command.Substring(7) == "Rations")
+                        var monsterHealth = monster.getMonsterHealth(); 
+                        int updatedMHealth;
+                        if (monster.getMonsterHealth() == 0)
                         {
-                            Item emptyRations = new Item("Empty Rations", false, "An empty packet of rations.");
-                            currentLocation.addItem(emptyRations);
-                            foreach (Item item in currentLocation.getInventory())
-                            {
-                                if (item.Name.ToLower() == "Rations")
-                                {
-                                    currentLocation.removeItem(item);
-                                    break;
-                                }
-
-                                if (item.Name.ToLower() == "me")
-                                {
-                                    break;
-                                }
-
-                            }
-
-                            Console.WriteLine("You have eaten the rations and feel less hungry now");
-                                return;
+                            monster.setMonsterDead(true);
+                            Console.WriteLine("The monster is dead and you can no longer attack it.");
+                            return;
                         }
-                    }
-                    else
-                    {
-                        Console.WriteLine("you cannot do this action");
-                        return;
-                    }
-                }
 
-                if (currentLocation.getInventory().Exists(x => x.Name == command.ToLower().Substring(4)))
-                {
-                    if (command.ToLower().Substring(4) == "body")
-                    {
-                        Console.WriteLine("\nThe body has been slashed across the chest and he is clearly dead");
-                        return;
+                        updatedMHealth = monsterHealth - 5;
+                                monster.setMonsterHealth(updatedMHealth);
+                                Console.WriteLine("You shoot the monster dealing 5 Damage.");
+                                if (monster.getMonsterHealth() > 0)
+                                {
+                                    Console.WriteLine("The monsters health is now {0}.",monster.getMonsterHealth());   
+                                }
+                                else
+                                {
+                                    Console.WriteLine("the monster has been killed. You may move to the next room");
+                                    currentLocation.removeMonster(monster);
+                                    pShowHealth();
+                                    showLocation();
+                                    return;
+                                }
+                                var playerHealth = player.getHealth();
+                                int updatePHealth;
+                                updatePHealth = playerHealth - 3;
+                                player.setHealth(updatePHealth);
+                                Console.WriteLine("When attacking the monster they dealt 3 damage.");
+                                Console.WriteLine("Your health is now {0}.", player.getHealth());
+                                return;
                     }
-
-                    if (command.ToLower().Substring(4) == "game over")
-                    {
-                        Console.WriteLine("the game has came to an end");
-                        _gameOver = true;
-                        return;
-                    }
-                }
-                else
-                {
-                    Console.WriteLine("there is nothing to use");
-                    return;
                 }
             }
+
+            //if (command.Length >= 7 && command.Substring(0, 7) == "look at")
+            //{
+            //    if (command == "look at")
+            //    {
+            //        Console.WriteLine("\n Please specify what you wish to look at.\n");
+            //        return;
+            //    }
+
+            //    if (currentLocation.getInventory().Exists(x =>
+            //        x.Name == command.Substring(8) || inventory.Exists(x => x.Name == command.ToLower().Substring(8))))
+            //    {
+            //        if (command.Substring(8).ToLower() == "Spacegun")
+            //        {
+            //            Console.WriteLine("\n" + currentLocation.getInventory().Find(x => x.Name.Contains("Spacegun"))
+            //                .Description + "\n");
+            //            return;
+            //        }
+
+            //        if (command.Substring(8).ToLower() == "Space Gun Ammo")
+            //        {
+            //            Console.WriteLine("\n" + currentLocation.getInventory()
+            //                .Find(x => x.Name.Contains("Space Gun Ammo")).Description + "\n");
+            //            return;
+            //        }
+
+            //        if (command.Substring(8).ToLower() == "Rations")
+            //        {
+            //            Console.WriteLine("\n" + currentLocation.getInventory().Find(x => x.Name.Contains("Rations"))
+            //                .Description + "\n");
+            //            return;
+            //        }
+            //    }
+            //    else
+            //    {
+            //        Console.WriteLine("\nThat item does not exist in this room or your inventory.\n");
+            //        return;
+            //    }
+            //}
+
+            //if (command.Length >= 3 && command.Substring(0, 3) == "use")
+            //{
+            //    if (command == "use")
+            //    {
+            //        Console.WriteLine("\n Please specify what you wish to use.\n");
+            //        return;
+            //    }
+
+                //if (inventory.Exists(x => x.Name == command.ToLower().Substring(4)))
+                //{
+                //    Console.WriteLine("\nUse " + command.Substring(4) + " with?\n");
+                //    string secondItem = Console.ReadLine();
+                //    if (currentLocation.getInventory().Exists(x => x.Name == secondItem))
+                //    {
+                //        if (secondItem == "me" && command.Substring(7) == "Rations")
+                //        {
+                //            Item emptyRations = new Item("Empty Rations", false, "An empty packet of rations.");
+                //            currentLocation.addItem(emptyRations);
+                //            foreach (Item item in currentLocation.getInventory())
+                //            {
+                //                if (item.Name.ToLower() == "Rations")
+                //                {
+                //                    currentLocation.removeItem(item);
+                //                    break;
+                //                }
+
+                //                if (item.Name.ToLower() == "me")
+                //                {
+                //                    break;
+                //                }
+
+                //            }
+
+                //            Console.WriteLine("You have eaten the rations and feel less hungry now");
+                //                return;
+                //        }
+                //    }
+                //    else
+                //    {
+                //        Console.WriteLine("you cannot do this action");
+                //        return;
+                //    }
+                //}
+
+            //    if (currentLocation.getInventory().Exists(x => x.Name == command.ToLower().Substring(4)))
+            //    {
+            //        if (command.ToLower().Substring(4) == "body")
+            //        {
+            //            Console.WriteLine("\nThe body has been slashed across the chest and he is clearly dead");
+            //            return;
+            //        }
+
+            //        if (command.ToLower().Substring(4) == "game over")
+            //        {
+            //            Console.WriteLine("the game has came to an end");
+            //            _gameOver = true;
+            //            return;
+            //        }
+            //    }
+            //    else
+            //    {
+            //        Console.WriteLine("there is nothing to use");
+            //        return;
+            //    }
+            //}
 
             if (moveRoom(command))
                 return;
-
             Console.WriteLine("\nInvalid command, are you confused?\n");
             }
 
@@ -421,8 +477,14 @@ namespace AdventureGame
             {
                 foreach (Exit exit in currentLocation.getExits())
                 {
+
                     if (command == exit.ToString().ToLower() || command == exit.getShortDirection().ToLower())
                     {
+                        if (currentLocation.getMonsters().Count == 1)
+                        {
+                            Console.WriteLine("You cannot move room till you have killed the enemy.");
+                            return false;
+                        }
                         currentLocation = exit.getLeadsTo();
                         Console.WriteLine("\nYou move " + exit.ToString() + " to the:\n");
                         showLocation();
@@ -441,6 +503,11 @@ namespace AdventureGame
                     isRunning = false;
                     return;
                 }
+            }
+
+            private void pShowHealth()
+            {
+                Console.WriteLine("\nyour current health is: {0}\n", player.getHealth());
             }
 
 

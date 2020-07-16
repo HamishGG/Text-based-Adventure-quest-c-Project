@@ -49,6 +49,11 @@ namespace AdventureGame
 
         }
 
+        public Monsters(bool mDead)
+        {
+            monsterDead = mDead;
+        }
+
         public override string ToString()
         {
             return monsterName;
