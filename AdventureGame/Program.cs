@@ -9,6 +9,7 @@
             while (_Game.isRunning)
             {
                 _Game.Update();
+
             }
         }
     }

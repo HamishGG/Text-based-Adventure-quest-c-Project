@@ -32,6 +32,7 @@ namespace AdventureGame
         }
 
         //init location information with title and desc
+        
         public Monsters(string mName, string mDescrption)
         {
             monsterName = mName;
